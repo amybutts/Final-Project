@@ -1,0 +1,65 @@
+---
+title: "Simple - Boroughs"
+output: html_notebook
+---
+
+library(dplyr)
+library(data.table)
+library(DT)
+
+```{r}
+# Read the data
+uber_ex <-read.csv("/Users/amysigridbutts/Documents/Columbia University/Courses/Introduction to Data Science/Project/Uber_example.csv")
+
+zones <-read.csv("/Users/amysigridbutts/Documents/Columbia University/Courses/Introduction to Data Science/Project/taxi-zone-lookup-with-ntacode.csv")
+
+April14 <-
+
+uber_2014 <- rbind(April14, May14)
+
+```                           
+
+```{r}
+
+plot(uber_ex$locationID)
+
+```
+
+```{r}
+counts <- table(uber_ex$locationID)
+barplot(counts, main="Number of rides for LocationID", 
+  	xlab="LocationID")
+```
+
+```{r}
+  #Look up locationID to match with borough
+ matched <- merge(uber_ex, zones, by.x="locationID", by.y="location_id")
+
+```
+
+```{r}
+  #Look up locationID to match with borough
+ summary(matched)
+
+```
+
+```{r}
+  #Plot number of pickups in borougs
+ 
+plot(matched$borough, 
+     ylab = "Number of pickups",
+     xlab = "Boroughs",
+     main = "Number of pickups in various boroughs")
+ 
+
+```
+
+```{r}
+# Datatable of boroughs - NEEDS TO BE IMPROVED
+by_Borough <- matched %>%
+    group_by(borough) %>%
+    tally() %>%
+    arrange(desc(n))
+datatable(by_Borough)
+
+```
